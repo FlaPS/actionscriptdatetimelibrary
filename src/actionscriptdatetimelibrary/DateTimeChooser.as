@@ -53,11 +53,15 @@ package actionscriptdatetimelibrary
 		
 		public function set selectedDateTime(value:Date):void
 		{
-			var time:Date = timeStepper.timeValue;
-			
 			_selectedDateTime = value;
 			
 			selectedDate = _selectedDateTime;
+			
+			if(!timeStepper)
+			{
+				createChildren();
+			}
+			
 			timeStepper.timeValue = _selectedDateTime;
 			
 			invalidateProperties();
