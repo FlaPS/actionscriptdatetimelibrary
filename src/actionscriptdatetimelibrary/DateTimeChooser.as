@@ -1,7 +1,8 @@
+/**
+* 
+*/
 package actionscriptdatetimelibrary
 {
-	import flash.events.MouseEvent;
-	
 	import mx.controls.DateChooser;
 	import mx.core.mx_internal;
 	
@@ -39,9 +40,18 @@ package actionscriptdatetimelibrary
 			
 			if(selectedDate != null)
 			{
-				_selectedDateTime = new Date(selectedDate.getFullYear(), selectedDate.getMonth(),
-					selectedDate.getDate(), time.getHours(), time.getMinutes(), time.getSeconds(),
-					time.getMilliseconds());
+				if(time)
+				{
+					_selectedDateTime = new Date(selectedDate.getFullYear(), 
+						selectedDate.getMonth(), selectedDate.getDate(), 
+						time.getHours(), time.getMinutes(), time.getSeconds(),
+						time.getMilliseconds());
+				}
+				else
+				{
+					_selectedDateTime = new Date(selectedDate.getFullYear(), 
+						selectedDate.getMonth(), selectedDate.getDate());
+				}
 				
 				return _selectedDateTime;
 			}
