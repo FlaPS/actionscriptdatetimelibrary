@@ -290,6 +290,7 @@ package actionscriptdatetimelibrary
 			timeValueChanged = true;
 			
 			_timeValue = value;
+			
 			commitTimeValue();
 			
 			invalidateProperties();
@@ -304,11 +305,14 @@ package actionscriptdatetimelibrary
 			{
 				timeField = new TimeInput();
 				
-				var currentTime:String = formatTimeChars(_timeValue.getHours(), 2) +
-					formatTimeChars(_timeValue.getMinutes(), 2) +
-					formatTimeChars(_timeValue.getSeconds(), 2) +
-					formatTimeChars(_timeValue.getMilliseconds(), 3);	
-				
+				var currentTime:String;
+				if(_timeValue)
+				{
+					currentTime = formatTimeChars(_timeValue.getHours(), 2) +
+						formatTimeChars(_timeValue.getMinutes(), 2) +
+						formatTimeChars(_timeValue.getSeconds(), 2) +
+						formatTimeChars(_timeValue.getMilliseconds(), 3);
+				}
 				timeField.styleName = new StyleProxy(this, inputFieldStyleFilters);
 				timeField.focusEnabled = false;
 				
@@ -629,16 +633,19 @@ package actionscriptdatetimelibrary
 		
 		private function convertTimeToText(time:Date):String
 		{
-			var convertedTime:String;
-			
-			var hours:String = formatTimeChars(time.getHours(), 2);
-			var minutes:String = formatTimeChars(time.getMinutes(), 2);
-			var seconds:String = formatTimeChars(time.getSeconds(), 2);
-			var milliseconds:String = formatTimeChars(time.getMilliseconds(), 3);
-			
-			convertedTime = hours + ":" + minutes + ":" + seconds + ":" + milliseconds;
-			
-			return convertedTime;
+ 			var convertedTime:String = "";
+ 			
+ 			if(time)
+ 			{
+ 				var hours:String = formatTimeChars(time.getHours(), 2);
+ 				var minutes:String = formatTimeChars(time.getMinutes(), 2);
+ 				var seconds:String = formatTimeChars(time.getSeconds(), 2);
+ 				var milliseconds:String = formatTimeChars(time.getMilliseconds(), 3);
+ 				
+ 				convertedTime = hours + ":" + minutes + ":" + seconds + ":" + milliseconds;
+ 			}
+ 			
+ 			return convertedTime;
 		}
 		
 		private function convertTextToTime(time:String):Date
@@ -725,6 +732,11 @@ package actionscriptdatetimelibrary
 		private function commitTimeValue():void
 		{
 			var allColons:RegExp = /:/g;
+			
+			if(!timeField)
+			{
+				createChildren();
+			}
 			
 			timeField.text = convertTimeToText(timeValue).replace(allColons, "");
 		}
