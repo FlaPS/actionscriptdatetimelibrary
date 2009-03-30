@@ -777,11 +777,13 @@ package actionscriptdatetimelibrary
 	    	
 	    	if(_showTime)
 	    	{
-	    		formatString = "MM/DD/YYYY HH:ii:ss:uuu";
+				formatString = resourceManager.getString("SharedResources", 
+					"dateFormat") + " HH:ii:ss";
 	    	}
 	    	else
 	    	{
-	    		formatString = "MM/DD/YYYY";
+				formatString = resourceManager.getString("SharedResources", 
+					"dateFormat");
 	    	}
 	    }
 	    
